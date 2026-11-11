@@ -16,6 +16,7 @@ UPLOAD_DIR = BASE_DIR / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
 init_db()
 
+# Variáveis utilizadas na mitigação do ataque de dicionário
 tentativasLogin = {} # guarda quantas falhas seguidas cada IP teve
 ATRASO_BASE = 0.5 # segundos que cada resposta incorreta acrescenta no tempo de resposta
 ATRASO_MAX = 3 # teto de atraso para as respostas, em segundos
@@ -171,7 +172,7 @@ def add_message(discipline_id):
     if discipline is None:
         abort(403)
     body = request.form.get("body", "")
-    body = html.scape(body) # linha de mitigação para o xss
+    body = html.escape(body) # linha de mitigação para o xss
     file = request.files.get("file")
     original_filename = file.filename if file and file.filename else None
     stored_filename = None
