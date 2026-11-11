@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+
+# arquivo vazio criado por engano
+unidin.bd
+
+# cache de IDE/SO
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
