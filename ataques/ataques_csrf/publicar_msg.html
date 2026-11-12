@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>UniDIN</title>
+</head>
+<body>
+
+    <h1>Material Extra </h1>
+
+    <p>Material complementar da disciplina.</p>
+        
+    <form
+        action="http://127.0.0.1:5000/disciplina/1/mensagem"
+        method="POST">
+
+          <!-- http://127.0.0.1:5000/disciplina/ID_DISCIPLINA/mensagem
+           ID_DISCIPLINA: número da disciplina em que será publicada a mensagem. -->
+
+        <input
+            type="hidden"
+            name="body"
+            value="Esta semana não haverá aulas.">
+
+        <button type="submit">
+            Acessar material extra
+        </button>
+
+    </form>
+
+</body>
+</html>

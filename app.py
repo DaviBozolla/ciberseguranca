@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory, abort, flash
+from flask_wtf.csrf import CSRFProtect
 from pathlib import Path
 import base64
 import mimetypes
@@ -11,6 +12,10 @@ import html
 
 app = Flask(__name__)
 app.secret_key = "unidin-local-secret-key"
+
+# Inicia proteção contra ataques CSRF
+csrf = CSRFProtect(app)
+
 BASE_DIR = Path(__file__).resolve().parent
 UPLOAD_DIR = BASE_DIR / "uploads"
 UPLOAD_DIR.mkdir(exist_ok=True)
@@ -88,7 +93,7 @@ def login():
 
     return render_template("login.html")
 
-@app.route("/logout")
+@app.route("/logout", methods=["POST"])
 def logout():
     session.clear()
     return redirect(url_for("login"))
@@ -142,7 +147,7 @@ def disciplina(discipline_id):
     conn.close()
     return render_template("disciplina.html", user=user, discipline=discipline, messages=messages, students=students, grades=grades)
 
-@app.route("/disciplina/<int:discipline_id>/nota", methods=["GET"])
+@app.route("/disciplina/<int:discipline_id>/nota", methods=["POST"])
 def save_grade(discipline_id):
     user = require_login()
     if user is None:
@@ -152,9 +157,9 @@ def save_grade(discipline_id):
     discipline = discipline_for_user(discipline_id, user)
     if discipline is None:
         abort(403)
-    student_id = request.args.get("student_id")
-    assessment = request.args.get("assessment")
-    value = request.args.get("value")
+    student_id = request.form.get("student_id")
+    assessment = request.form.get("assessment")
+    value = request.form.get("value")
     conn = get_connection()
     existing = conn.execute("SELECT id FROM grades WHERE discipline_id=? AND student_id=? AND assessment=?", (discipline_id, student_id, assessment)).fetchone()
     if existing:
@@ -189,7 +194,7 @@ def add_message(discipline_id):
     conn.close()
     return redirect(url_for("disciplina", discipline_id=discipline_id))
 
-@app.route("/mensagem/<int:message_id>/excluir", methods=["GET"])
+@app.route("/mensagem/<int:message_id>/excluir", methods=["POST"])
 def delete_message(message_id):
     user = require_login()
     if user is None:

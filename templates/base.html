@@ -12,7 +12,11 @@
     {% if session.get('user_id') %}
     <nav>
         <a href="{{ url_for('index') }}">Início</a>
-        <a href="{{ url_for('logout') }}">Sair</a>
+        <form method="POST" action="{{ url_for('logout') }}" style="display: inline; margin:0;">
+             <!-- Token CSRF no logout da sessão -->
+             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+             <button type="submit" class="logout-button">Sair</button>
+        </form>
     </nav>
     {% endif %}
 </header>
