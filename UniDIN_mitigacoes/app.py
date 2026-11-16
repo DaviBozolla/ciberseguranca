@@ -13,7 +13,7 @@ import html
 app = Flask(__name__)
 app.secret_key = "unidin-local-secret-key"
 
-# Inicia proteção contra ataques CSRF
+# Proteção contra ataques CSRF
 csrf = CSRFProtect(app)
 
 BASE_DIR = Path(__file__).resolve().parent
